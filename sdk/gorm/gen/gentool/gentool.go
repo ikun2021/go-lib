@@ -299,6 +299,8 @@ func main() {
 		g.ApplyBasic(models...)
 	}
 
+	g.ApplyInterface(func(Method) {}, models...)
+
 	g.Execute()
 }
 func upperFirst(s string) string {

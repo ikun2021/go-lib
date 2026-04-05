@@ -37,7 +37,7 @@ var tracer = otel.Tracer("redis-demo")
 // newJaegerTraceProvider 创建一个 Jaeger Trace Provider
 
 func tracerProvider(url string) (*tracesdk.TracerProvider, error) {
-
+	redis.Client{}.x
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		return nil, err

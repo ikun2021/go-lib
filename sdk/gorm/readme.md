@@ -12,7 +12,7 @@
 
 https://gorm.io/zh_CN/docs/index.html
 
-gorm提供的文档非常齐全了，总结一下在工作中的一些实践，如果对您有帮我，您的star就是对我的鼓励https://github.com/luxun9527/go-lib 如有任何问题也欢迎留言。
+gorm提供的文档非常齐全了，总结一下在工作中的一些实践，如果对您有帮我，您的star就是对我的鼓励https://github.com/ikun2021/go-lib 如有任何问题也欢迎留言。
 
 
 

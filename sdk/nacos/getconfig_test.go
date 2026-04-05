@@ -11,12 +11,12 @@ import (
 func TestGetConfig(t *testing.T) {
 	// 定义 Nacos 服务器地址
 	sc := []constant.ServerConfig{
-		*constant.NewServerConfig("192.168.31.100", 8848, constant.WithContextPath("/nacos")),
+		*constant.NewServerConfig("192.168.2.159", 8848, constant.WithContextPath("/nacos")),
 	}
 
 	// 定义客户端配置
 	cc := constant.ClientConfig{
-		NamespaceId:         "05932850-81ea-422b-873c-809a963627d7",
+		NamespaceId:         "8df63f6c-f858-4bf9-bea5-f69f7e64e431",
 		TimeoutMs:           5000,
 		ListenInterval:      30000,
 		Username:            "nacos",

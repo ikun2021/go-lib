@@ -70,6 +70,7 @@ func TestJaegerBaseUseage(t *testing.T) {
 
 func func2(ctx context.Context) {
 	spanCtx := trace.SpanContextFromContext(ctx)
+	spanCtx.HasTraceID()
 	log.Println(spanCtx.TraceID().String())
 	tr := otel.Tracer(_globalTrace)
 	// 调用一个方法开启一个span

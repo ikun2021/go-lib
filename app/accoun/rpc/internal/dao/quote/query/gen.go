@@ -17,23 +17,23 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:         db,
-		Trades0000: newTrades0000(db, opts...),
+		db:           db,
+		MatchedOrder: newMatchedOrder(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Trades0000 trades0000
+	MatchedOrder matchedOrder
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:         db,
-		Trades0000: q.Trades0000.clone(db),
+		db:           db,
+		MatchedOrder: q.MatchedOrder.clone(db),
 	}
 }
 
@@ -47,18 +47,18 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:         db,
-		Trades0000: q.Trades0000.replaceDB(db),
+		db:           db,
+		MatchedOrder: q.MatchedOrder.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Trades0000 *trades0000Do
+	MatchedOrder *matchedOrderDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Trades0000: q.Trades0000.WithContext(ctx),
+		MatchedOrder: q.MatchedOrder.WithContext(ctx),
 	}
 }
 

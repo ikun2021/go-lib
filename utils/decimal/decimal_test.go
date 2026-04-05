@@ -1,6 +1,7 @@
 package decimal
 
 import (
+	"github.com/ikun2021/zlog"
 	"github.com/shopspring/decimal"
 	"log"
 	"testing"
@@ -64,4 +65,11 @@ func TestDecimal(t *testing.T) {
 	d2, _ := decimal.NewFromString("120.11")
 	d2.GreaterThan(d1)
 	log.Printf("result %v", d2.RoundBank(3).String())
+}
+func TestDecimal2(t *testing.T) {
+	d := decimal.New(1, -1)
+	zlog.Infof("%v", d)
+	d = decimal.New(1, 1)
+	zlog.Infof("%v", d)
+
 }

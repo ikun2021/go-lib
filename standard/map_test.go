@@ -1,10 +1,10 @@
 package standard
 
 import (
+	"encoding/json"
 	"log"
 	"sync"
 	"testing"
-	"time"
 )
 
 func TestMapAssign(t *testing.T) {
@@ -55,13 +55,10 @@ func TestSyncMap1(t *testing.T) {
 }
 
 func TestName(t *testing.T) {
-	var s = map[int32]string{1: "1"}
-	s2 := s[2]
-	log.Println(s2)
-	var format = "2006-01-02T15:04Z07:00"
-	t1, err := time.Parse(format, "2025-05-23T15:00+08:00")
-	if err != nil {
-		log.Printf("err %v", err)
+	m := map[int]string{1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9", 10: "10", 11: "11", 12: "12", 13: "13", 14: "14"}
+	for k, v := range m {
+		log.Println(k, v)
 	}
-	log.Println(t1)
+	d, err := json.Marshal(m)
+	log.Printf("%v, %v", string(d), err)
 }

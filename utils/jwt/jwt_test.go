@@ -4,6 +4,7 @@ package test
 import (
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/ikun2021/zlog"
 	"log"
 	"testing"
 	"time"
@@ -12,13 +13,12 @@ import (
 // https://pkg.go.dev/github.com/golang-jwt/jwt/v4#example-Parse-Hmac
 // https://pkg.go.dev/github.com/golang-jwt/jwt/v4#RegisteredClaims
 type CustomClaims struct {
-	UserName string
-	UserId   int32
+	UserName string `json:"username"`
 	jwt.RegisteredClaims
 }
 
 const (
-	SignKey = "569ef72642be0fadd711d6a468d68ee1"
+	SignKey = "emqxsecret"
 )
 
 // ssh-keygen -t rsa -b 4096 -C "your_email@example.com
@@ -27,9 +27,8 @@ const (
 func GenerateToken() (string, error) {
 	userInfo := CustomClaims{
 		UserName: "zhangSan",
-		UserId:   1,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
+			//ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
 		},
 	}
 	//tokenClaims := jwt.NewWithClaims(jwt.SigningMethodRS256, userInfo)
@@ -39,6 +38,18 @@ func GenerateToken() (string, error) {
 	token, err := tokenClaims.SignedString([]byte(SignKey))
 	//token, err := tokenClaims.SignedString(priKey)
 	return token, err
+}
+func TestJwt(t *testing.T) {
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, CustomClaims{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
+		},
+	})
+	signedString, err := tokenClaims.SignedString([]byte("emqxsecret"))
+	if err != nil {
+		log.Panicf("generate token err: %v", err)
+	}
+	zlog.Infof("token: %s", signedString)
 }
 
 func TestParseToken(t *testing.T) {
