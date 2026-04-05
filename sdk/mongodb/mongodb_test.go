@@ -3,15 +3,16 @@ package mongodb
 import (
 	"context"
 	"errors"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
 	"math/rand"
 	"testing"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/mongo/readpref"
 )
 
 var (
@@ -28,14 +29,17 @@ const (
 func initDB() {
 	var err error
 	//uri := "mongodb://root:example@192.168.2.159:30011,192.168.2.159:30012,192.168.2.159:30013/?replicaSet=rs0"
-	uri := "mongodb://root:example@192.168.2.200:30011,192.168.2.200:30012,192.168.2.200:30013/admin?replicaSet=rs0"
-
+	uri := "mongodb://admin:admin@192.168.2.159:27017/admin?replicaSet=rs0"
+	// 设置日志级别为 Debug，组件为 Command
+	loggerOptions := options.Logger().
+		SetComponentLevel(options.LogComponentCommand, options.LogLevelDebug)
 	clientOptions := options.Client().
 		ApplyURI(uri).
 		SetMaxPoolSize(1000).
 		SetMinPoolSize(100).
+		SetLoggerOptions(loggerOptions).
 		SetReadPreference(readpref.SecondaryPreferred())
-	_cli, err = mongo.Connect(context.TODO(), clientOptions)
+	_cli, err = mongo.Connect(clientOptions)
 	if err != nil {
 		log.Printf("connect mongodb error: %v", err)
 	}
@@ -193,7 +197,7 @@ func TestTransaction(t *testing.T) {
 		log.Panicf("start session failed,err:%v", err)
 	}
 	defer session.EndSession(context.Background())
-	_, err = session.WithTransaction(context.Background(), func(sessCtx mongo.SessionContext) (interface{}, error) {
+	_, err = session.WithTransaction(context.Background(), func(sessCtx context.Context) (interface{}, error) {
 		collection := _cli.Database("testdb").Collection("testcol")
 		if _, err := collection.InsertOne(sessCtx, bson.D{{"name", "Alice"}}); err != nil {
 			return nil, err

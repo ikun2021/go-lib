@@ -83,12 +83,13 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.2.3
 	github.com/useflyent/fhttp v0.0.0-20211004035111-333f430cfbbf
 	github.com/vimsucks/wxwork-bot-go v1.0.0
-	github.com/xdg-go/scram v1.1.2
+	github.com/xdg-go/scram v1.2.0
 	github.com/yitter/idgenerator-go v1.3.3
 	github.com/zeromicro/go-zero v1.8.3
 	go.etcd.io/etcd/api/v3 v3.5.15
 	go.etcd.io/etcd/client/v3 v3.5.15
 	go.mongodb.org/mongo-driver v1.17.3
+	go.mongodb.org/mongo-driver/v2 v2.5.0
 	go.opentelemetry.io/otel v1.33.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/sdk v1.33.0
